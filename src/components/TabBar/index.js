@@ -7,6 +7,17 @@ import HomeScreen from '../../HomeScreen';
 import DiscoveryScreen from '../../DiscoveryScreen';
 import MessageScreen from '../../MessageScreen';
 import MeScreen from '../../MeScreen';
+import {themeColor} from "../../common/config";
+
+// const HomeStack = createStackNavigator({
+//     HOME: HomeScreen,
+//     DISCOVERY: DiscoveryScreen,
+// });
+//
+// const SettingsStack = createStackNavigator({
+//     MESSAGE: MessageScreen,
+//     ME: MeScreen,
+// });
 
 const MainNavigator = createBottomTabNavigator(
     {
@@ -15,6 +26,12 @@ const MainNavigator = createBottomTabNavigator(
         MESSAGE: {screen: MessageScreen},
         ME: {screen: MeScreen},
     },
+    // {
+    //     HOME: HomeStack,
+    //     DISCOVERY: SettingsStack,
+    //     MESSAGE: HomeStack,
+    //     ME: SettingsStack,
+    // },
     {
         defaultNavigationOptions: ({navigation}) => ({
             tabBarIcon: ({focused, horizontal, tintColor}) => {
@@ -39,7 +56,7 @@ const MainNavigator = createBottomTabNavigator(
             },
         }),
         tabBarOptions: {
-            activeTintColor: 'tomato',
+            activeTintColor: themeColor,
             inactiveTintColor: 'gray',
         },
     }

@@ -1,3 +1,3 @@
-import App from './App/components/TabBar';
+import App from './src/components/TabBar';
 
 export default App;
