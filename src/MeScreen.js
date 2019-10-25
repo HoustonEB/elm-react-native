@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import { View, Text, Button } from 'react-native';
 
 export default class HomeScreen extends React.Component {
-    static navigationOptions = {
-        title: '我',
-    };
+    // static navigationOptions = {
+    //     title: '我',
+    // };
     render() {
         const {navigate} = this.props.navigation;
         return (

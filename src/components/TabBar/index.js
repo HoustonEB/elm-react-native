@@ -7,32 +7,44 @@ import HomeScreen from '../../HomeScreen';
 import DiscoveryScreen from '../../DiscoveryScreen';
 import MessageScreen from '../../MessageScreen';
 import MeScreen from '../../MeScreen';
+import ArticleDetail from '../../components/ArticleDetail';
 import {themeColor} from "../../common/config";
 
-// const HomeStack = createStackNavigator({
-//     HOME: HomeScreen,
-//     DISCOVERY: DiscoveryScreen,
-// });
-//
-// const SettingsStack = createStackNavigator({
-//     MESSAGE: MessageScreen,
-//     ME: MeScreen,
-// });
-
 const MainNavigator = createBottomTabNavigator(
-    {
-        HOME: {screen: HomeScreen},
-        DISCOVERY: {screen: DiscoveryScreen},
-        MESSAGE: {screen: MessageScreen},
-        ME: {screen: MeScreen},
-    },
     // {
-    //     HOME: HomeStack,
-    //     DISCOVERY: SettingsStack,
-    //     MESSAGE: HomeStack,
-    //     ME: SettingsStack,
+    //     HOME: {screen: HomeScreen},
+    //     DISCOVERY: {screen: DiscoveryScreen},
+    //     MESSAGE: {screen: MessageScreen},
+    //     ME: {screen: MeScreen}
     // },
     {
+        HOME: {
+            screen: HomeScreen,
+            navigationOptions: {
+                title: '首页'
+            }
+        },
+        DISCOVERY: {
+            screen: DiscoveryScreen,
+            navigationOptions: {
+                title: '发现'
+            }
+        },
+        MESSAGE: {
+            screen: MessageScreen,
+            navigationOptions: {
+                title: '我'
+            }
+        },
+        ME: {
+            screen: MeScreen,
+            navigationOptions: {
+                title: '消息'
+            }
+        }
+    },
+    {
+        initialRouteName: 'HOME',
         defaultNavigationOptions: ({navigation}) => ({
             tabBarIcon: ({focused, horizontal, tintColor}) => {
                 const {routeName} = navigation.state;
@@ -62,6 +74,20 @@ const MainNavigator = createBottomTabNavigator(
     }
 );
 
-const App = createAppContainer(MainNavigator);
+const RouterConfig = createStackNavigator(
+    {
+        HOME: {
+            screen: MainNavigator,
+            navigationOptions: {
+                header: null
+            }
+        },
+        ArticleDetail: {
+            screen: ArticleDetail
+        }
+    }
+);
+
+const App = createAppContainer(RouterConfig);
 
 export default App;

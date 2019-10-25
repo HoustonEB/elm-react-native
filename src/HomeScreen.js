@@ -7,18 +7,19 @@ import {
 } from "./common/config";
 import HotArticle from './components/HotArticle';
 import Icon from 'react-native-vector-icons/Octicons';
+import NewArticle from './components/NewArticle';
 
 const axios = require('axios');
 
 export default class HomeScreen extends React.Component {
-    static navigationOptions = {
-        title: '首页',
-    };
+    // static navigationOptions = {
+    //     title: '首页',
+    // };
 
     constructor(props) {
         super(props);
         this.state = {
-          articleType: ['首页', 'Android', 'IOS', '前端', '后端'],
+            articleType: ['首页', 'Android', 'IOS', '前端', '后端'],
             active: '首页',
             showArticle: true,
             hotArticleData: [
@@ -50,6 +51,18 @@ export default class HomeScreen extends React.Component {
                     time: '一周前',
                     image: ''
                 }
+            ],
+            newArticleData: [
+                {
+                    image: '',
+                    author: '梧桐12891289212',
+                    viewTime: '3小时',
+                    type: 'Android',
+                    title: '使用 react native 开发了一个one客户端,文章介绍了代码中用到的思路和工具',
+                    image1: '',
+                    abstract: 'React native 项目进阶(redux,redux saga,redux logger)',
+                    favoriteNum: 44
+                }
             ]
         };
     }
@@ -71,36 +84,6 @@ export default class HomeScreen extends React.Component {
                 })}
             </ScrollView>
         )
-    }
-
-    handleClickTabs(item) {
-        this.setState({
-            active: item
-        });
-        this.setState({
-            hotArticleData: this.state.hotArticleData.map(itm => {
-                return Object.assign(itm, {author: item});
-            })
-        });
-        setTimeout(() => {
-            switch (item) {
-                case '首页':
-                    break;
-                case 'Android':
-                    break;
-                case 'IOS':
-                    break;
-            }
-        }, 2000);
-    }
-
-    handleCloseHotArticle() {
-        this.setState({showArticle: false});
-        console.log('close')
-    }
-
-    handleRefresh() {
-        console.log('refresh')
     }
 
     renderHotArticleContent() {
@@ -135,12 +118,60 @@ export default class HomeScreen extends React.Component {
                 <View style={{marginBottom: px2dp(10)}}>
                     {hotArticleData.map((item, index) => {
                         return (
-                            <HotArticle key={index} data={item}></HotArticle>
+                            <HotArticle key={index} data={item} navigation={this.props.navigation}></HotArticle>
                         )
                     })}
                 </View>
             </View>
         );
+    }
+
+    renderNewArticle() {
+        const {
+            newArticleData
+        } = this.state;
+        // const {
+        //
+        // } = styles;
+        return (
+            <View>
+                {newArticleData.map((item, index) => {
+                    return (
+                        <NewArticle key={index} data={item}></NewArticle>
+                    )
+                })}
+            </View>
+        )
+    }
+
+    handleClickTabs(item) {
+        this.setState({
+            active: item
+        });
+        this.setState({
+            hotArticleData: this.state.hotArticleData.map(itm => {
+                return Object.assign(itm, {author: item});
+            })
+        });
+        setTimeout(() => {
+            switch (item) {
+                case '首页':
+                    break;
+                case 'Android':
+                    break;
+                case 'IOS':
+                    break;
+            }
+        }, 2000);
+    }
+
+    handleCloseHotArticle() {
+        this.setState({showArticle: false});
+        console.log('close')
+    }
+
+    handleRefresh() {
+        console.log('refresh')
     }
 
     render() {
@@ -151,10 +182,11 @@ export default class HomeScreen extends React.Component {
         } = styles;
 
         return (
-            <View style={homeWrapper}>
+            <ScrollView style={homeWrapper}>
                 <View>{this.renderTabs()}</View>
                 {showArticle ? this.renderHotArticleContent() : null}
-            </View>
+                {this.renderNewArticle()}
+            </ScrollView>
         );
     }
 }

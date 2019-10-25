@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
-import {View, Text, Image, StyleSheet,Slider} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {px2dp} from "../../utils/px2dp";
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class HotArticle extends Component {
     constructor(props) {
         super(props);
+    }
+
+    handleClickEntryDetail() {
+        const {
+            navigation
+        } = this.props;
+
+        navigation.navigate('ArticleDetail');
     }
 
     render() {
@@ -21,24 +29,26 @@ export default class HotArticle extends Component {
         const {data, style} = this.props;
 
         return (
-            <View style={[wrapper, style]}>
-                <View style={leftWrapper}>
-                    <View style={titleWrapper}>
-                        <Text style={title} numberOfLines={1} ellipsizeMode={'middle'}>{data.title}</Text>
+            <TouchableNativeFeedback onPress={this.handleClickEntryDetail.bind(this)}>
+                <View style={[wrapper, style]}>
+                    <View style={leftWrapper}>
+                        <View style={titleWrapper}>
+                            <Text style={title} numberOfLines={1} ellipsizeMode={'middle'}>{data.title}</Text>
+                        </View>
+                        <View style={{display: 'flex', flexDirection: 'row'}}>
+                            <Text><Icon name="md-heart" size={px2dp(15)} color="#e8e8e8"/></Text>
+                            <Text style={icon}>{data.favorite}</Text>
+                            <Text><Icon name="md-person" size={px2dp(15)} color="#e8e8e8"/></Text>
+                            <Text style={icon}>{data.author}</Text>
+                            <Text><Icon name="md-clock" size={px2dp(15)} color="#e8e8e8"/></Text>
+                            <Text style={icon}>{data.time}</Text>
+                        </View>
                     </View>
-                    <View style={{display: 'flex', flexDirection: 'row'}}>
-                        <Text><Icon name="md-heart" size={px2dp(15)} color="#e8e8e8"/></Text>
-                        <Text style={icon}>{data.favorite}</Text>
-                        <Text><Icon name="md-person" size={px2dp(15)} color="#e8e8e8"/></Text>
-                        <Text style={icon}>{data.author}</Text>
-                        <Text><Icon name="md-clock" size={px2dp(15)} color="#e8e8e8"/></Text>
-                        <Text style={icon}>{data.time}</Text>
+                    <View style={rightWrapper}>
+                        <Image style={rightImage} source={require('../../images/logo_og.png')}></Image>
                     </View>
                 </View>
-                <View style={rightWrapper}>
-                    <Image style={rightImage} source={require('../../images/logo_og.png')}></Image>
-                </View>
-            </View>
+            </TouchableNativeFeedback>
         )
     }
 }
