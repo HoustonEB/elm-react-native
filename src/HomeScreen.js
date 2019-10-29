@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, Button, ScrollView, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
+import {
+    View,
+    Text,
+    ScrollView,
+    StyleSheet,
+    TouchableOpacity,
+    RefreshControl
+} from 'react-native';
 import {px2dp} from './utils/px2dp';
 import {
     themeColor,
@@ -22,34 +29,47 @@ export default class HomeScreen extends React.Component {
             articleType: ['首页', 'Android', 'IOS', '前端', '后端'],
             active: '首页',
             showArticle: true,
+            isRefreshing: false,
             hotArticleData: [
                 {
                     title: '仅两步实现汉堡导航栏效果~全新底部导航交互',
                     favorite: 888,
                     author: 'android',
                     time: '一周前',
-                    image: ''
+                    image: '',
+                    createDate: new Date().toLocaleDateString(),
+                    content: '仅两步实现汉堡导航栏效果~全新底部导航交互仅两步实现汉堡导航栏效果~全新底部' +
+                    '导航交互仅两步实现汉堡导航栏效果~全新底部导航交互仅两步实现汉堡导航栏效果~全新底部导航交互'
                 },
                 {
                     title: '仅两步实现汉堡导航栏效果~全新底部导航交互',
                     favorite: 888,
                     author: 'android',
                     time: '一周前',
-                    image: ''
+                    image: '',
+                    createDate: new Date().toLocaleDateString(),
+                    content: '仅两步实现汉堡导航栏效果~全新底部导航交互仅两步实现汉堡导航栏效果~全新底部' +
+                    '导航交互仅两步实现汉堡导航栏效果~全新底部导航交互仅两步1231232131'
                 },
                 {
                     title: '仅两步实现汉堡导航栏效果~全新底部导航交互',
                     favorite: 888,
                     author: 'android',
                     time: '一周前',
-                    image: ''
+                    image: '',
+                    createDate: new Date().toLocaleDateString(),
+                    content: 'fasdfffasfwefwefw航栏效果~全新底部导航交互仅两步实现汉堡导航栏效果~全新底部' +
+                    '导航交互仅两步实现汉堡导航栏效果~全新底部导航交互仅两步实现汉堡导航栏效果~全新底部导航交互'
                 },
                 {
                     title: '仅两步实现汉堡导航栏效果~全新底部导航交互',
                     favorite: 888,
                     author: 'android',
                     time: '一周前',
-                    image: ''
+                    image: '',
+                    createDate: new Date().toLocaleDateString(),
+                    content: '仅两步实现汉堡导航栏效果~全新底部导航交互仅两步实现汉堡导航栏效果~全新底部' +
+                    '导航交互仅两步实现汉堡导航栏效果~全新底部导航交互仅两步实现汉堡导航栏效果~全新底部导航交互'
                 }
             ],
             newArticleData: [
@@ -75,7 +95,10 @@ export default class HomeScreen extends React.Component {
         } = styles;
 
         return (
-            <ScrollView horizontal={true} style={articleWrapper}>
+            <ScrollView
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+                style={articleWrapper}>
                 {this.state.articleType.map((item, index) => {
                     return <Text
                         style={[articleItem, this.state.active === item ? activeItem : null]}
@@ -165,6 +188,28 @@ export default class HomeScreen extends React.Component {
         }, 2000);
     }
 
+    _onRefresh() {
+        this.setState({
+            isRefreshing: true
+        });
+        setTimeout(() => {
+            this.setState((prevState, nextProps) => {
+                return {
+                    isRefreshing: false,
+                    hotArticleData: prevState.hotArticleData.concat(new Array(1).fill(
+                        {
+                            title: '仅两步实现汉堡导航栏效果~全新底部导航交互',
+                            favorite: 888,
+                            author: 'android',
+                            time: '一周前',
+                            image: ''
+                        }))
+                }
+            });
+        }, 3000);
+        console.log('refresh11')
+    }
+
     handleCloseHotArticle() {
         this.setState({showArticle: false});
         console.log('close')
@@ -182,7 +227,22 @@ export default class HomeScreen extends React.Component {
         } = styles;
 
         return (
-            <ScrollView style={homeWrapper}>
+            <ScrollView
+                style={homeWrapper}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.isRefreshing}
+                        onRefresh={() => this._onRefresh()}
+                        tintColor='red'
+                        title="Loading..."
+                        titleColor="#00ff00"
+                        colors={[themeColor, 'purple', 'orange']}
+                        progressBackgroundColor="#fff"
+                        size={1}
+                        // progressViewOffset={200}
+                    />
+                }
+            >
                 <View>{this.renderTabs()}</View>
                 {showArticle ? this.renderHotArticleContent() : null}
                 {this.renderNewArticle()}

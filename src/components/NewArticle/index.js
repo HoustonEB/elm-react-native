@@ -40,7 +40,7 @@ export default class NewArticle extends Component {
                     </View>
                 </View>
                 <View style={typeWrapper}>
-                    <Text>{type}</Text>
+                    <Text style={{textAlign: 'right'}}>{type}</Text>
                 </View>
             </View>
         )
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         paddingLeft: px2dp(10)
     },
     typeWrapper: {
-        width: px2dp(40)
+        width: px2dp(100)
     },
     titleImage: {
         width: px2dp(30),

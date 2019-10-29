@@ -8,12 +8,13 @@ export default class HotArticle extends Component {
         super(props);
     }
 
-    handleClickEntryDetail() {
+    handleClickEntryDetail(data) {
         const {
             navigation
         } = this.props;
-
-        navigation.navigate('ArticleDetail');
+        navigation.navigate('ArticleDetail', {
+            data
+        });
     }
 
     render() {
@@ -29,13 +30,13 @@ export default class HotArticle extends Component {
         const {data, style} = this.props;
 
         return (
-            <TouchableNativeFeedback onPress={this.handleClickEntryDetail.bind(this)}>
+            <TouchableNativeFeedback onPress={this.handleClickEntryDetail.bind(this, data)}>
                 <View style={[wrapper, style]}>
                     <View style={leftWrapper}>
                         <View style={titleWrapper}>
                             <Text style={title} numberOfLines={1} ellipsizeMode={'middle'}>{data.title}</Text>
                         </View>
-                        <View style={{display: 'flex', flexDirection: 'row'}}>
+                        <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                             <Text><Icon name="md-heart" size={px2dp(15)} color="#e8e8e8"/></Text>
                             <Text style={icon}>{data.favorite}</Text>
                             <Text><Icon name="md-person" size={px2dp(15)} color="#e8e8e8"/></Text>

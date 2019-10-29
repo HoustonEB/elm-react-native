@@ -83,7 +83,10 @@ const RouterConfig = createStackNavigator(
             }
         },
         ArticleDetail: {
-            screen: ArticleDetail
+            screen: ArticleDetail,
+            navigationOptions: {
+                title: '文章详情'
+            }
         }
     }
 );
