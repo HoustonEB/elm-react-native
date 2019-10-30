@@ -2,8 +2,12 @@ import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {px2dp} from "../../utils/px2dp";
 import Icon from 'react-native-vector-icons/Ionicons';
+import {themeColor} from "../../common/config";
 
 export default class HotArticle extends Component {
+    // static Ripple(color: 'green');
+    // static SelectableBackground();
+
     constructor(props) {
         super(props);
     }
@@ -30,7 +34,9 @@ export default class HotArticle extends Component {
         const {data, style} = this.props;
 
         return (
-            <TouchableNativeFeedback onPress={this.handleClickEntryDetail.bind(this, data)}>
+            <TouchableNativeFeedback
+                background={TouchableNativeFeedback.Ripple(themeColor)}
+                onPress={this.handleClickEntryDetail.bind(this, data)}>
                 <View style={[wrapper, style]}>
                     <View style={leftWrapper}>
                         <View style={titleWrapper}>

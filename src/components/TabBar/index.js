@@ -1,15 +1,37 @@
 import React, {Component} from 'react';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
+import {createBottomTabNavigator, createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../../HomeScreen';
 import DiscoveryScreen from '../../DiscoveryScreen';
 import MessageScreen from '../../MessageScreen';
+import DynamicScreen from '../../DynamicScreen';
 import MeScreen from '../../MeScreen';
 import ArticleDetail from '../../components/ArticleDetail';
 import {themeColor} from "../../common/config";
 
+const topTabNavigator = createMaterialTopTabNavigator(
+    {
+        MESSAGE: {
+            screen: MessageScreen,
+            navigationOptions: {
+                title: '消息'
+            }
+        },
+        DYNAMIC: {
+            screen: DynamicScreen,
+            navigationOptions: {
+                title: '动态'
+            }
+        }
+    },
+    {
+        tabBarOptions: {
+            // scrollEnabled: true
+        }
+    }
+);
 const MainNavigator = createBottomTabNavigator(
     // {
     //     HOME: {screen: HomeScreen},
@@ -31,15 +53,15 @@ const MainNavigator = createBottomTabNavigator(
             }
         },
         MESSAGE: {
-            screen: MessageScreen,
+            screen: topTabNavigator,
             navigationOptions: {
-                title: '我'
+                title: '消息'
             }
         },
         ME: {
             screen: MeScreen,
             navigationOptions: {
-                title: '消息'
+                title: '我'
             }
         }
     },
